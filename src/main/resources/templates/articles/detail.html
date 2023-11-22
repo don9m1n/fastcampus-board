@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 상세 페이지</title>
+</head>
+<body>
+    <header th:replace="layouts/header :: header"></header>
+
+    <main>
+        <header>
+            <h1>딮기 디코) 데프트 인사</h1>
+        </header>
+
+        <aside>
+            <p>DK Deft</p>
+            <p><a href="mailto:dkdeft@lol.com">dkdeft@lol.com</a></p>
+            <p><time datetime="2023-11-22T:00:00:00">2023-11-22</time></p>
+            <p>#DK #DEFT</p>
+        </aside>
+
+        <section>
+            <p>본문<br><br></p>
+
+            <div>
+                <form>
+                    <label for="comment" hidden>댓글</label>
+                    <textarea id="comment" placeholder="따뜻한 댓글 부탁드립니다." rows="3"></textarea>
+                    <button type="submit">등록</button>
+                </form>
+            </div>
+
+            <ul>
+                <li>
+                    <div>
+                        <time><small>2023-11-22</small></time>
+                        <strong>Faker</strong>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Atque consectetur deserunt eum laudantium maxime minus porro quam voluptatum?
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <time><small>2023-11-22</small></time>
+                        <strong>Zeus</strong>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Atque consectetur deserunt eum laudantium maxime minus porro quam voluptatum?
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <time><small>2023-11-22</small></time>
+                        <strong>ShowMaker</strong>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Atque consectetur deserunt eum laudantium maxime minus porro quam voluptatum?
+                        </p>
+                    </div>
+                </li>
+            </ul>
+
+            <nav>
+                <a href="#">이전글</a>
+                <a href="#">다음글</a>
+            </nav>
+        </section>
+
+    </main>
+
+    <footer th:replace="layouts/footer :: footer"></footer>
+</body>
+</html>
