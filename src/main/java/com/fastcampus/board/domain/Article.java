@@ -16,7 +16,7 @@ import java.util.Set;
         @Index(columnList = "createdBy")
 })
 @Entity
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Article extends AuditingFields {
@@ -24,6 +24,10 @@ public class Article extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Setter
+    @ManyToOne(optional = false)
+    private UserAccount userAccount;
 
     @Setter
     @Column(nullable = false)
@@ -36,13 +40,14 @@ public class Article extends AuditingFields {
     @Setter
     private String hashtag;
 
-    @OrderBy("id")
+    @OrderBy("createdAt DESC")
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     @ToString.Exclude
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
-    public static Article of(String title, String content, String hashtag) {
+    public static Article of(UserAccount userAccount, String title, String content, String hashtag) {
         return Article.builder()
+                .userAccount(userAccount)
                 .title(title)
                 .content(content)
                 .hashtag(hashtag)
