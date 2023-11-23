@@ -23,7 +23,13 @@ public class ArticleCommentService {
         return List.of();
     }
 
-    public void saveArticleComments(ArticleCommentDto dto) {
+    public void saveArticleComment(ArticleCommentDto dto) {
 
+    }
+
+    public void updateArticleComment(ArticleCommentDto dto) {
+    }
+
+    public void deleteArticleComment(Long articleCommentId) {
     }
 }
