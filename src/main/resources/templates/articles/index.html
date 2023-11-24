@@ -72,19 +72,30 @@
             </tbody>
         </table>
 
-        <nav aria-label="Page navigation example">
+        <nav id="pagination">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+                    <!-- HTML 특수 문자는 별도의 코드로 표현 -->
+                    <a class="page-link"
+                       th:text="prev"
+                       th:classappend="${articles.number <= 0} ? 'disabled' : ''"
+                       th:href="@{|/articles?page=${articles.number - 1}|}">
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                <li class="page-item" th:each="page : ${paginationBarNumbers}">
+                    <a class="page-link"
+                       th:text="${page + 1}"
+                       th:classappend="${articles.number == page} ? 'active' : ''"
+                       th:href="@{|/articles?page=${page}|}">
+                    </a>
+                </li>
+
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
+                    <a class="page-link"
+                       th:text="next"
+                       th:classappend="${articles.number >= articles.totalPages - 1} ? 'disabled' : ''"
+                       th:href="@{|/articles?page=${articles.number + 1}|}">
                     </a>
                 </li>
             </ul>
