@@ -13,7 +13,7 @@ import java.util.Objects;
         @Index(columnList = "createdBy")
 })
 @Entity
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class ArticleComment extends AuditingFields {
@@ -27,12 +27,17 @@ public class ArticleComment extends AuditingFields {
     private Article article;
 
     @Setter
+    @ManyToOne(optional = false)
+    private UserAccount userAccount;
+
+    @Setter
     @Column(nullable = false, length = 500)
     private String content;
 
-    public static ArticleComment of(Article article, String content) {
+    public static ArticleComment of(Article article, UserAccount userAccount, String content) {
         return ArticleComment.builder()
                 .article(article)
+                .userAccount(userAccount)
                 .content(content)
                 .build();
     }

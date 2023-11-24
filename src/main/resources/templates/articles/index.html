@@ -61,23 +61,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>첫 글</td>
-                    <td>#JAVA</td>
-                    <td>Dongmin</td>
-                    <td>2023-11-01</td>
-                </tr>
-                <tr>
-                    <td>두번쨰 글</td>
-                    <td>#JPA #SPRING</td>
-                    <td>Dongmin</td>
-                    <td>2023-11-12</td>
-                </tr>
-                <tr>
-                    <td>세번째 글</td>
-                    <td>#JAVA</td>
-                    <td>Dongmin</td>
-                    <td>2023-11-22</td>
+                <tr th:each="article : ${articles}">
+                    <td>
+                        <a th:href="@{|/articles/${article.id}|}" th:text="${article.title}"></a>
+                    </td>
+                    <td th:text="${article.hashtag}"></td>
+                    <td th:text="${article.nickname}"></td>
+                    <td th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd')}"></td>
                 </tr>
             </tbody>
         </table>
