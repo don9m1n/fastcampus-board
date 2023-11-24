@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Builder
-public record ArticleWithCommentResponse(
+public record ArticleWithCommentsResponse(
         Long id,
         String title,
         String content,
@@ -18,11 +18,11 @@ public record ArticleWithCommentResponse(
         LocalDateTime createdAt,
         String email,
         String nickname,
-        Set<ArticleCommentResponse> articleCommentResponses
+        Set<ArticleCommentResponse> articleCommentsResponse
 ) implements Serializable {
 
-    public static ArticleWithCommentResponse of(Long id, String title, String content, String hashtag, LocalDateTime createdAt, String email, String nickname, Set<ArticleCommentResponse> articleCommentResponses) {
-        return ArticleWithCommentResponse.builder()
+    public static ArticleWithCommentsResponse of(Long id, String title, String content, String hashtag, LocalDateTime createdAt, String email, String nickname, Set<ArticleCommentResponse> articleCommentResponses) {
+        return ArticleWithCommentsResponse.builder()
                 .id(id)
                 .title(title)
                 .content(content)
@@ -30,17 +30,17 @@ public record ArticleWithCommentResponse(
                 .createdAt(createdAt)
                 .email(email)
                 .nickname(nickname)
-                .articleCommentResponses(articleCommentResponses)
+                .articleCommentsResponse(articleCommentResponses)
                 .build();
     }
 
-    public static ArticleWithCommentResponse from(ArticleWithCommentsDto dto) {
+    public static ArticleWithCommentsResponse from(ArticleWithCommentsDto dto) {
         String nickname = dto.userAccountDto().nickname();
         if (nickname == null || nickname.isBlank()) {
             nickname = dto.userAccountDto().userId();
         }
 
-        return ArticleWithCommentResponse.builder()
+        return ArticleWithCommentsResponse.builder()
                 .id(dto.id())
                 .title(dto.title())
                 .content(dto.content())
@@ -48,7 +48,7 @@ public record ArticleWithCommentResponse(
                 .createdAt(dto.createdAt())
                 .email(dto.userAccountDto().email())
                 .nickname(nickname)
-                .articleCommentResponses(dto.articleCommentDtos().stream()
+                .articleCommentsResponse(dto.articleCommentDtos().stream()
                         .map(ArticleCommentResponse::from)
                         .collect(Collectors.toCollection(LinkedHashSet::new)))
                 .build();
