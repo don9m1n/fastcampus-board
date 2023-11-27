@@ -2,6 +2,7 @@ package com.fastcampus.board.controller;
 
 import com.fastcampus.board.config.SecurityConfig;
 import com.fastcampus.board.domain.Article;
+import com.fastcampus.board.domain.type.SearchType;
 import com.fastcampus.board.dto.ArticleDto;
 import com.fastcampus.board.dto.ArticleWithCommentsDto;
 import com.fastcampus.board.dto.UserAccountDto;
@@ -65,6 +66,31 @@ class ArticleControllerTest {
                 .andExpect(model().attributeExists("paginationBarNumbers"));
 
         then(articleService).should().searchArticles(eq(null), eq(null), any(Pageable.class));
+        then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
+    }
+
+    @DisplayName("[VIEW][GET] 게시글 리스트 (게시판) 페이지 - 검색어와 함께 호출")
+    @Test
+    public void givenSearchKeyword_whenSearchArticlesView_thenReturnArticlesView() throws Exception {
+
+        SearchType searchType = SearchType.TITLE;
+        String searchValue = "title";
+
+        // mocking
+        given(articleService.searchArticles(eq(searchType), eq(searchValue), any(Pageable.class))).willReturn(Page.empty());
+        given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0, 1, 2, 3, 4));
+
+        mvc.perform(get("/articles")
+                        .queryParam("searchType", searchType.name())
+                        .queryParam("searchValue", searchValue)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(view().name("articles/index"))
+                .andExpect(model().attributeExists("articles"))
+                .andExpect(model().attributeExists("searchTypes")); // select option은 서버에서 내려준다.
+
+        then(articleService).should().searchArticles(eq(searchType), eq(searchValue), any(Pageable.class));
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
 
