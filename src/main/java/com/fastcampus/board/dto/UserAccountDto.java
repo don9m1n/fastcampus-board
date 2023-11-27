@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 @Builder
 public record UserAccountDto(
-        Long id,
         String userId,
         String userPassword,
         String email,
@@ -18,10 +17,22 @@ public record UserAccountDto(
         LocalDateTime modifiedAt,
         String modifiedBy
 ) {
-
-    public static UserAccountDto of(Long id, String userId, String userPassword, String email, String nickname, String memo, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+    public static UserAccountDto of(String userId, String userPassword, String email, String nickname, String memo) {
         return UserAccountDto.builder()
-                .id(id)
+                .userId(userId)
+                .userPassword(userPassword)
+                .email(email)
+                .nickname(nickname)
+                .memo(memo)
+                .createdAt(null)
+                .createdBy(null)
+                .modifiedAt(null)
+                .modifiedBy(null)
+                .build();
+    }
+
+    public static UserAccountDto of(String userId, String userPassword, String email, String nickname, String memo, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return UserAccountDto.builder()
                 .userId(userId)
                 .userPassword(userPassword)
                 .email(email)
@@ -36,7 +47,6 @@ public record UserAccountDto(
 
     public static UserAccountDto from(UserAccount entity) {
         return UserAccountDto.builder()
-                .id(entity.getId())
                 .userId(entity.getUserId())
                 .userPassword(entity.getUserPassword())
                 .email(entity.getEmail())
