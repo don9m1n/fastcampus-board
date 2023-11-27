@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/search-bar.css}">
+    <link rel="stylesheet" th:href="@{/css/table-header.css}">
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header th:replace="layouts/header :: header"></header>
@@ -54,10 +55,27 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th class="col-6">제목</th>
-                    <th class="col-2">해시태그</th>
-                    <th class="col">작성자</th>
-                    <th class="col">작성일</th>
+                    <th class="col-6">
+                        <a th:href="@{/articles(page=${articles.number},
+                                                sort='title' + (${articles.sort.getOrderFor('title')} != null ? (${articles.sort.getOrderFor('title').direction.name} != 'DESC' ? ',desc' : ',asc') : '')
+                        )}"
+                        th:text="제목"></a>
+                    </th>
+                    <th class="col-2">
+                        <a th:href="@{/articles(page=${articles.number},
+                                                sort='hashtag' + (${articles.sort.getOrderFor('hashtag')} != null ? (${articles.sort.getOrderFor('hashtag').direction.name} != 'DESC' ? ',desc' : ',asc') : '')
+                        )}" th:text="해시태그"></a>
+                    </th>
+                    <th class="col">
+                        <a th:href="@{/articles(page=${articles.number},
+                                                sort='userAccount.userId' + (${articles.sort.getOrderFor('userAccount.userId')} != null ? (${articles.sort.getOrderFor('userAccount.userId').direction.name} != 'DESC' ? ',desc' : ',asc') : '')
+                        )}" th:text="작성자"></a>
+                    </th>
+                    <th class="col">
+                        <a th:href="@{/articles(page=${articles.number},
+                                                sort='createdAt' + (${articles.sort.getOrderFor('createdAt')} != null ? (${articles.sort.getOrderFor('createdAt').direction.name} != 'DESC' ? ',desc' : ',asc') : '')
+                        )}" th:text="작성일"></a>
+                    </th>
                 </tr>
             </thead>
             <tbody>
