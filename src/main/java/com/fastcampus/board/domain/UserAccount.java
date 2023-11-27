@@ -20,10 +20,6 @@ import java.util.Objects;
 public class UserAccount extends AuditingFields {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Setter
     @Column(nullable = false, length = 50)
     private String userId;
 
@@ -56,11 +52,11 @@ public class UserAccount extends AuditingFields {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof UserAccount that)) return false;
-        return Objects.equals(id, that.id);
+        return Objects.equals(userId, that.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(userId);
     }
 }

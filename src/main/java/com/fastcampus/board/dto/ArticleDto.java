@@ -1,6 +1,7 @@
 package com.fastcampus.board.dto;
 
 import com.fastcampus.board.domain.Article;
+import com.fastcampus.board.domain.UserAccount;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -37,6 +38,29 @@ public record ArticleDto(
                 .build();
     }
 
+    public static ArticleDto of(UserAccountDto userAccountDto, String title, String content, String hashtag, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return ArticleDto.builder()
+                .id(null)
+                .userAccountDto(userAccountDto)
+                .title(title)
+                .content(content)
+                .hashtag(hashtag)
+                .createdAt(createdAt)
+                .createdBy(createdBy)
+                .modifiedAt(modifiedAt)
+                .modifiedBy(modifiedBy)
+                .build();
+    }
+
+    public static ArticleDto of(UserAccountDto userAccountDto, String title, String content, String hashtag) {
+        return ArticleDto.builder()
+                .userAccountDto(userAccountDto)
+                .title(title)
+                .content(content)
+                .hashtag(hashtag)
+                .build();
+    }
+
     public static ArticleDto from(Article entity) {
         return ArticleDto.builder()
                 .id(entity.getId())
@@ -51,8 +75,8 @@ public record ArticleDto(
                 .build();
     }
 
-    public Article toEntity() {
-        return Article.of(userAccountDto.toEntity(), title, content, hashtag);
+    public Article toEntity(UserAccount userAccount) {
+        return Article.of(userAccount, title, content, hashtag);
     }
 
 }
