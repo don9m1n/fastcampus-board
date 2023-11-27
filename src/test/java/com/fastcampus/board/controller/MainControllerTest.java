@@ -27,7 +27,8 @@ class MainControllerTest {
     @Test
     void givenNothing_whenRequestMainPage_thenForwardToArticlesPage() throws Exception {
         mvc.perform(get("/"))
-                .andExpect(status().is3xxRedirection())
+                .andExpect(status().isOk())
+                .andExpect(view().name("forward:/articles"))
                 .andExpect(forwardedUrl("/articles"));
     }
 }
