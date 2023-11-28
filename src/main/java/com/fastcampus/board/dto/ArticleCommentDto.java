@@ -2,6 +2,7 @@ package com.fastcampus.board.dto;
 
 import com.fastcampus.board.domain.Article;
 import com.fastcampus.board.domain.ArticleComment;
+import com.fastcampus.board.domain.UserAccount;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -44,8 +45,20 @@ public record ArticleCommentDto(
                 .build();
     }
 
-    public ArticleComment toEntity(Article entity) {
-        return ArticleComment.of(entity, userAccountDto.toEntity(), content);
+    public static ArticleCommentDto of(Long articleId, UserAccountDto userAccountDto, String content) {
+        return ArticleCommentDto.builder()
+                .articleId(articleId)
+                .userAccountDto(userAccountDto)
+                .content(content)
+                .build();
+    }
+
+    public ArticleComment toEntity(Article entity, UserAccount userAccount) {
+        return ArticleComment.of(
+                entity,
+                userAccount,
+                content
+        );
     }
 
 }
